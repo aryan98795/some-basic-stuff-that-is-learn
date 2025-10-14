@@ -43,5 +43,28 @@ After this, your Docker will be completely clean — no containers, images, netw
 
 ---
 
+```bash
+docker system prune -a --volumes -f
+```
 
-Do you want me to do that?
+**Explanation:**
+
+* `docker system prune` → removes stopped containers, unused networks, dangling images.
+* `-a` → also removes all unused images, not just dangling ones.
+* `--volumes` → removes all unused volumes.
+* `-f` → force, no confirmation prompt.
+
+💡 Warning: This **deletes all your Docker data**, so make sure you don’t need anything.
+
+```bash
+docker rm -f $(docker ps -aq) && docker rmi -f $(docker images -aq) && docker volume rm $(docker volume ls -q) && docker network rm $(docker network ls -q)
+```
+
+**Explanation:**
+
+1. `docker rm -f $(docker ps -aq)` → force-remove all containers (running or stopped).
+2. `docker rmi -f $(docker images -aq)` → force-remove all images.
+3. `docker volume rm $(docker volume ls -q)` → remove all volumes.
+4. `docker network rm $(docker network ls -q)` → remove all networks.
+
+⚠️ **Caution:** This **completely wipes your Docker setup**. Nothing can be recovered after this.
